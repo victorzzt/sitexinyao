@@ -1,0 +1,59 @@
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>JSON SBOM</title>
+  <meta name="description" content="Page Display JSON SBOM">
+  <meta name="author" content="IoT House">
+
+  <meta property="og:title" content="SBOM Json Display">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://zhangzit.pages.iu.edu/subsites/codereader/">
+  <meta property="og:description" content="SBOM Json Display">
+  <meta property="og:image" content="./siteinfo/thumbnail.png">
+
+  <link rel="icon" href="./siteinfo/thumbnail.png">
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+  <script>
+  function loadJSON(path, success, error)
+  {
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(){
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                if (success)
+                    success(JSON.parse(xhr.responseText));
+            } else {
+                if (error)
+                    error(xhr);
+            }
+        }
+    };
+    xhr.open("GET", path, true);
+    xhr.send();
+  }
+  
+  function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
+  </script>
+  <script>
+    let objDepend;
+    loadJSON('./json/sbom2dot.json', function(jobject){
+      objDepend = jobject;
+    });
+    async function init(){
+      while( objDepend == undefined ){
+        await sleep(1);  // usually will be loaded
+      }
+      console.log(objDepend);
+    }
+  </script>
+</head>
+
+<body onload="init()">
+</body>
+</html>
