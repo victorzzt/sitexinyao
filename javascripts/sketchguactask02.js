@@ -4,7 +4,7 @@ let transx = 0;
 let transy = 0;
 
 function preload() {
-	img = loadImage('./imgs/guac_itdepends.png');
+	img = loadImage('./imgs/guac_graphtage.png');
 }
 
 function setup() {
